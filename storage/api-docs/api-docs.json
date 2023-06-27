@@ -1,0 +1,290 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "localhost API",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/posts": {
+            "get": {
+                "tags": [
+                    "POSTS"
+                ],
+                "summary": "Get all posts",
+                "description": "Get all posts",
+                "operationId": "allPosts",
+                "responses": {
+                    "200": {
+                        "description": "All showed posts",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "title": {
+                                                        "description": "Post title",
+                                                        "type": "string",
+                                                        "example": "Great Title"
+                                                    },
+                                                    "description": {
+                                                        "description": "Post description",
+                                                        "type": "string",
+                                                        "example": "Quis nemo impedit magnam enim rerum ipsa."
+                                                    },
+                                                    "image": {
+                                                        "description": "Post cover",
+                                                        "type": "string",
+                                                        "example": "http://portal/storage/images/image.webp"
+                                                    },
+                                                    "date": {
+                                                        "description": "Post date",
+                                                        "type": "string",
+                                                        "example": "02 May 2023"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            },
+                                            "collectionFormat": "multi"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "POSTS"
+                ],
+                "summary": "Create Post",
+                "description": "Create Post",
+                "operationId": "reatePost",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "description": "Post title",
+                                        "type": "string",
+                                        "example": "Super Post"
+                                    },
+                                    "description": {
+                                        "description": "Post description",
+                                        "type": "string",
+                                        "example": "Description log for post"
+                                    },
+                                    "category_id": {
+                                        "description": "CID",
+                                        "type": "integer",
+                                        "example": "2"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "All showed posts",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "title": {
+                                                        "description": "Post title",
+                                                        "type": "string",
+                                                        "example": "Great Title"
+                                                    },
+                                                    "description": {
+                                                        "description": "Post description",
+                                                        "type": "string",
+                                                        "example": "Quis nemo impedit magnam enim rerum ipsa."
+                                                    },
+                                                    "image": {
+                                                        "description": "Post cover",
+                                                        "type": "string",
+                                                        "example": "http://portal/storage/images/image.webp"
+                                                    },
+                                                    "date": {
+                                                        "description": "Post date",
+                                                        "type": "string",
+                                                        "example": "02 May 2023"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            },
+                                            "collectionFormat": "multi"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/posts/{id}": {
+            "get": {
+                "tags": [
+                    "POSTS"
+                ],
+                "summary": "Get one posts",
+                "description": "Get one posts",
+                "operationId": "showPosts",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Post ID",
+                        "required": true,
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "All showed posts",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "title": {
+                                                        "description": "Post title",
+                                                        "type": "string",
+                                                        "example": "Great Title"
+                                                    },
+                                                    "description": {
+                                                        "description": "Post description",
+                                                        "type": "string",
+                                                        "example": "Quis nemo impedit magnam enim rerum ipsa."
+                                                    },
+                                                    "image": {
+                                                        "description": "Post cover",
+                                                        "type": "string",
+                                                        "example": "http://portal/storage/images/image.webp"
+                                                    },
+                                                    "date": {
+                                                        "description": "Post date",
+                                                        "type": "string",
+                                                        "example": "02 May 2023"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            },
+                                            "collectionFormat": "multi"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "AUTH"
+                ],
+                "summary": "Login",
+                "description": "Login",
+                "operationId": "Login",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "description": "User email",
+                                        "type": "string",
+                                        "example": "admin@gmail.com"
+                                    },
+                                    "pass": {
+                                        "description": "User password",
+                                        "type": "string",
+                                        "example": "12341234"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "All showed posts",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "title": {
+                                                        "description": "Post title",
+                                                        "type": "string",
+                                                        "example": "Great Title"
+                                                    },
+                                                    "description": {
+                                                        "description": "Post description",
+                                                        "type": "string",
+                                                        "example": "Quis nemo impedit magnam enim rerum ipsa."
+                                                    },
+                                                    "image": {
+                                                        "description": "Post cover",
+                                                        "type": "string",
+                                                        "example": "http://portal/storage/images/image.webp"
+                                                    },
+                                                    "date": {
+                                                        "description": "Post date",
+                                                        "type": "string",
+                                                        "example": "02 May 2023"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            },
+                                            "collectionFormat": "multi"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "sanctum": {
+                "type": "apiKey",
+                "description": "Enter token in format (Bearer <token>)",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    }
+}

@@ -1,0 +1,56 @@
+version: '3.6'
+
+networks:
+  artem-network:
+      name: artem-network
+      driver: bridge
+
+services:
+
+  php:
+    build: './docker/php/'
+    container_name: artem.php
+    networks:
+      - artem-network
+    depends_on:
+      - mariadb
+    environment:
+      PHP_EXTENSION_XDEBUG: 1
+      PHP_IDE_CONFIG: "serverName=local-pdl.com"
+    volumes:
+      - ./:/var/www/html/
+      - ./docker/php/upload.ini:/usr/local/etc/php/conf.d/custom.ini
+      - ./docker/php/conf.d/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+      - ./docker/php/conf.d/error_reporting.ini:/usr/local/etc/php/conf.d/error_reporting.ini
+
+  apache:
+    build: './docker/apache/'
+    container_name: artem.apache
+    networks:
+      - artem-network
+    depends_on:
+      - php
+      - mariadb
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/var/www/html/
+
+  mariadb:
+    image: mariadb:10.4.17
+    container_name: artem.mariadb
+    restart: always
+    networks:
+      - artem-network
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: sdEd-Fds4-DneR-Q3sx
+      MYSQL_DATABASE: pdlprofit
+      MYSQL_HOST: mariadb
+    command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
+    volumes:
+      #- ./docker/mariadb/volume:/var/lib/mysql
+      - ./docker/mariadb/my.cnf:/etc/mysql/conf.d/custom.cnf
+      - ./docker/mariadb/var/pdlprofit_db_structure_03.11.21.sql:/docker-entrypoint-initdb.d/1.sql
+      - ./docker/mariadb/var/pdlprofit_general_seed.sql:/docker-entrypoint-initdb.d/2.sql
